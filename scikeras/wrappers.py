@@ -663,7 +663,7 @@ class BaseWrapper(BaseEstimator):
             )
             X_dtype_ = X.dtype
             X_shape_ = X.shape
-            if(X_shape_)<2:
+            if len(X_shape_)<2:
                 n_features_in_ = 'text'
             else:
                 n_features_in_ = X.shape[1]
