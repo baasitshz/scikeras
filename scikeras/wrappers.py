@@ -658,12 +658,15 @@ class BaseWrapper(BaseEstimator):
             X = check_array(
                 X,
                 allow_nd=True,
-                dtype=_check_array_dtype(X, force_numeric=True),
+                dtype=_check_array_dtype(X, force_numeric=False),
                 accept_sparse=True,
             )
             X_dtype_ = X.dtype
             X_shape_ = X.shape
-            n_features_in_ = X.shape[1]
+            if(X_shape_)<2:
+                n_features_in_ = 'text'
+            else:
+                n_features_in_ = X.shape[1]
             if reset:
                 self.X_dtype_ = X_dtype_
                 self.X_shape_ = X_shape_
@@ -680,11 +683,12 @@ class BaseWrapper(BaseEstimator):
                         f"X has {len(X_shape_)} dimensions, but this {self.__name__}"
                         f" is expecting {len(self.X_shape_)} dimensions in X."
                     )
-                if X_shape_[1:] != self.X_shape_[1:]:
-                    raise ValueError(
-                        f"X has shape {X_shape_[1:]}, but this {self.__name__}"
-                        f" is expecting X of shape {self.X_shape_[1:]}"
-                    )
+                if type(n_features_in_)!=str:
+                    if X_shape_[1:] != self.X_shape_[1:]:
+                        raise ValueError(
+                            f"X has shape {X_shape_[1:]}, but this {self.__name__}"
+                            f" is expecting X of shape {self.X_shape_[1:]}"
+                        )
         return X, y
 
     def _type_of_target(self, y: np.ndarray) -> str:
