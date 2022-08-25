@@ -618,7 +618,7 @@ class BaseWrapper(BaseEstimator):
             X, y = check_X_y(
                 X,
                 y,
-                ensure_2d=False;
+                ensure_2d=False,
                 accept_sparse=True,
                 allow_nd=True,  # allow X to have more than 2 dimensions
                 multi_output=True,  # allow y to be 2D
